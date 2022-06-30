@@ -9,16 +9,28 @@ context.fillRect(0, 0, canvas.width, canvas.height)
 const gravity = 0.9
 
 class Sprite {
-    constructor({position, velocity}) {
+    constructor({position, velocity, color = 'red'}) {
         this.position = position
         this.velocity = velocity
         this.height = 150
+        this.width = 50
+        // noinspection BadExpressionStatementJS
         this.lastKey
+        this.attackBox = {
+            position: this.position,
+            width: 100,
+            height: 50
+        }
+        this.color = color
     }
 
     draw() {
-        context.fillStyle = 'red'
-        context.fillRect(this.position.x, this.position.y, 50, 150)
+        context.fillStyle = this.color
+        context.fillRect(this.position.x, this.position.y, this.width, this.height)
+
+        // Attack box
+        context.fillStyle = 'green'
+        context.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
     }
 
     update() {
@@ -50,7 +62,8 @@ const enemy = new Sprite({
     velocity: {
         x: 0,
         y: 0
-    }
+    },
+    color: 'blue'
 })
 
 console.log(player)
@@ -73,6 +86,20 @@ const keys = {
     },
     ArrowUp: {
         pressed: false
+    }
+}
+
+function detectCollision() {
+    let attackPositionX = player.attackBox.position.x + player.attackBox.width
+    let attackPositionY = player.attackBox.position.y + player.attackBox.height
+    let enemyHitBoxX = enemy.position.x + enemy.width
+    let enemyHitBoxY = enemy.position.y + enemy.height
+
+    if (
+        attackPositionX >= enemy.position.x && player.attackBox.position.x <= enemyHitBoxX &&
+        attackPositionY >= enemy.position.y && player.attackBox.position.y <= enemyHitBoxY
+    ) {
+        console.log('hit')
     }
 }
 
@@ -99,6 +126,8 @@ function animator() {
     } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 5
     }
+
+    detectCollision()
 }
 
 animator()
@@ -119,7 +148,7 @@ window.addEventListener('keydown', (event) => {
                 player.velocity.y = -20
             }
             break
-        // Player 2
+        // Player 2 (enemy)
         case 'ArrowRight':
             keys.ArrowRight.pressed = true
             enemy.lastKey = 'ArrowRight'
