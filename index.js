@@ -110,19 +110,16 @@ const keys = {
     }
 }
 
-function detectCollision() {
-    let attackPositionX = player.attackBox.position.x + player.attackBox.width
-    let attackPositionY = player.attackBox.position.y + player.attackBox.height
-    let enemyHitBoxX = enemy.position.x + enemy.width
-    let enemyHitBoxY = enemy.position.y + enemy.height
+function detectCollision({rectangle1, rectangle2}) {
+    let attackPositionX = rectangle1.attackBox.position.x + rectangle1.attackBox.width
+    let attackPositionY = rectangle1.attackBox.position.y + rectangle1.attackBox.height
+    let enemyHitBoxX = rectangle2.position.x + rectangle2.width
+    let enemyHitBoxY = rectangle2.position.y + rectangle2.height
 
-    if (
-        attackPositionX >= enemy.position.x && player.attackBox.position.x <= enemyHitBoxX &&
-        attackPositionY >= enemy.position.y && player.attackBox.position.y <= enemyHitBoxY &&
-        player.isAttacking
-    ) {
-        console.log('hit')
-    }
+    return (
+        attackPositionX >= rectangle2.position.x && rectangle1.attackBox.position.x <= enemyHitBoxX &&
+        attackPositionY >= rectangle2.position.y && rectangle1.attackBox.position.y <= enemyHitBoxY
+    )
 }
 
 function animator() {
@@ -149,7 +146,12 @@ function animator() {
         enemy.velocity.x = 5
     }
 
-    detectCollision()
+    if (detectCollision({
+        rectangle1: player, rectangle2: enemy
+    }) && player.isAttacking) {
+        player.isAttacking = false
+        console.log('hit')
+    }
 }
 
 animator()
