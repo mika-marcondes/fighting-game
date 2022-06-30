@@ -35,8 +35,10 @@ class Sprite {
         context.fillRect(this.position.x, this.position.y, this.width, this.height)
 
         // Attack box
-        context.fillStyle = 'green'
-        context.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+        if (this.isAttacking) {
+            context.fillStyle = 'green'
+            context.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+        }
     }
 
     update() {
@@ -111,14 +113,11 @@ const keys = {
 }
 
 function detectCollision({rectangle1, rectangle2}) {
-    let attackPositionX = rectangle1.attackBox.position.x + rectangle1.attackBox.width
-    let attackPositionY = rectangle1.attackBox.position.y + rectangle1.attackBox.height
-    let enemyHitBoxX = rectangle2.position.x + rectangle2.width
-    let enemyHitBoxY = rectangle2.position.y + rectangle2.height
-
     return (
-        attackPositionX >= rectangle2.position.x && rectangle1.attackBox.position.x <= enemyHitBoxX &&
-        attackPositionY >= rectangle2.position.y && rectangle1.attackBox.position.y <= enemyHitBoxY
+        rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x &&
+        rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width &&
+        rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
+        rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
     )
 }
 
@@ -146,11 +145,16 @@ function animator() {
         enemy.velocity.x = 5
     }
 
-    if (detectCollision({
-        rectangle1: player, rectangle2: enemy
-    }) && player.isAttacking) {
+    // Detect collision for Player 1
+    if (detectCollision({rectangle1: player, rectangle2: enemy}) && player.isAttacking) {
         player.isAttacking = false
-        console.log('hit')
+        console.log('Player 1 attack hit')
+    }
+
+    // Detect collision for Player 2
+    if (detectCollision({rectangle1: enemy, rectangle2: player}) && enemy.isAttacking) {
+        enemy.isAttacking = false
+        console.log('Player 2 attack hit')
     }
 }
 
@@ -175,6 +179,7 @@ window.addEventListener('keydown', (event) => {
         case ' ':
             player.attack()
             break
+
         // Player 2 (enemy)
         case 'ArrowRight':
             keys.ArrowRight.pressed = true
@@ -189,8 +194,10 @@ window.addEventListener('keydown', (event) => {
                 enemy.velocity.y = -20
             }
             break
+        case 'ArrowDown':
+            enemy.attack()
+            break
     }
-    console.log(event.key)
 })
 
 window.addEventListener('keyup', (event) => {
@@ -213,5 +220,4 @@ window.addEventListener('keyup', (event) => {
             keys.ArrowLeft.pressed = false
             break
     }
-    console.log(event.key)
 })
