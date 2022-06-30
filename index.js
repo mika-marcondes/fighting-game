@@ -7,32 +7,52 @@ canvas.height = 576
 context.fillRect(0, 0, canvas.width, canvas.height)
 
 class Sprite {
-    constructor(position) {
+    constructor({position, velocity}) {
         this.position = position
+        this.velocity = velocity
     }
 
-    draw(){
+    draw() {
         context.fillStyle = 'red'
         context.fillRect(this.position.x, this.position.y, 50, 150)
     }
+
+    update() {
+        this.draw()
+        this.position.y += this.velocity.y
+    }
 }
 
-const player = new Sprite(
-    {
+const player = new Sprite({
+    position: {
+        x: 0,
+        y: 0
+    },
+    velocity: {
         x: 0,
         y: 0
     }
-)
+})
 
-player.draw()
-
-const enemy = new Sprite(
-    {
+const enemy = new Sprite({
+    position: {
         x: 974,
+        y: 0,
+    },
+    velocity: {
+        x: 0,
         y: 0
     }
-)
-
-enemy.draw()
+})
 
 console.log(player)
+
+function animator() {
+    window.requestAnimationFrame(animator)
+    context.fillStyle = 'black'
+    context.fillRect(0, 0, canvas.width, canvas.height)
+    player.update()
+    enemy.update()
+}
+
+animator()
