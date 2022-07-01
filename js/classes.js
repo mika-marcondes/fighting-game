@@ -57,7 +57,22 @@ class Fighter {
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
 
-        this.position.y + this.height + this.velocity.y >= canvas.height ? this.velocity.y = 0 : this.velocity.y += gravity
+        this.position.y + this.height + this.velocity.y >= canvas.height - 97 ? this.velocity.y = 0 : this.velocity.y += gravity
+
+        // Create "invisible" wall for Player 1
+        if (player.position.x < 0 && player.lastKey === 'a') {
+            keys.a.pressed = false
+        } else if (player.position.x > 973 && player.lastKey === 'd') {
+            keys.d.pressed = false
+        }
+
+        // Create "invisible" wall for Player 2 (enemy)
+        if (enemy.position.x < 0 && enemy.lastKey === 'ArrowLeft') {
+            keys.ArrowLeft.pressed = false
+        } else if (enemy.position.x > 973 && enemy.lastKey === 'ArrowRight') {
+            keys.ArrowRight.pressed = false
+        }
+
     }
 
     attack() {
