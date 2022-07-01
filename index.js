@@ -154,6 +154,7 @@ function animator() {
     // Detect collision for Player 2 (Enemy)
     if (detectCollision({rectangle1: enemy, rectangle2: player}) && enemy.isAttacking) {
         enemy.isAttacking = false
+        document.querySelector('#playerHealth').style.width = '20%'
     }
 }
 

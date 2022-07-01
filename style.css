@@ -19,14 +19,31 @@ body {
     padding: 20px;
 }
 
-#playerHealth {
-    width: 100%;
-    background-color: yellow;
+.health-container {
+    position: relative;
     height: 30px;
+    width: 100%;
 }
 
 #enemyHealth {
-    width: 100%;
+    position: absolute;
+    background: blue;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#playerHealth {
+    position: absolute;
+    background: blue;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.health-bar {
     background-color: yellow;
     height: 30px;
 }
