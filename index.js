@@ -148,13 +148,12 @@ function animator() {
     // Detect collision for Player 1
     if (detectCollision({rectangle1: player, rectangle2: enemy}) && player.isAttacking) {
         player.isAttacking = false
-        console.log('Player 1 attack hit')
+        document.querySelector('#enemyHealth').style.width = '20%'
     }
 
-    // Detect collision for Player 2
+    // Detect collision for Player 2 (Enemy)
     if (detectCollision({rectangle1: enemy, rectangle2: player}) && enemy.isAttacking) {
         enemy.isAttacking = false
-        console.log('Player 2 attack hit')
     }
 }
 
@@ -176,7 +175,7 @@ window.addEventListener('keydown', (event) => {
                 player.velocity.y = -20
             }
             break
-        case ' ':
+        case 's':
             player.attack()
             break
 
