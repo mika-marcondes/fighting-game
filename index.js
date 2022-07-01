@@ -27,7 +27,7 @@ class Sprite {
         }
         this.color = color
         this.isAttacking = false
-
+        this.health = 100
     }
 
     draw() {
@@ -148,13 +148,15 @@ function animator() {
     // Detect collision for Player 1
     if (detectCollision({rectangle1: player, rectangle2: enemy}) && player.isAttacking) {
         player.isAttacking = false
-        document.querySelector('#enemyHealth').style.width = '20%'
+        enemy.health -= 10
+        document.querySelector('#enemyHealth').style.width = enemy.health + '%'
     }
 
     // Detect collision for Player 2 (Enemy)
     if (detectCollision({rectangle1: enemy, rectangle2: player}) && enemy.isAttacking) {
         enemy.isAttacking = false
-        document.querySelector('#playerHealth').style.width = '20%'
+        player.health -= 10
+        document.querySelector('#playerHealth').style.width = player.health + '%'
     }
 }
 

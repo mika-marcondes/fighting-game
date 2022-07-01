@@ -25,6 +25,11 @@ body {
     width: 100%;
 }
 
+.flex-align {
+    display: flex;
+    justify-content: flex-end;
+}
+
 #enemyHealth {
     position: absolute;
     background: blue;
@@ -39,13 +44,14 @@ body {
     background: blue;
     top: 0;
     bottom: 0;
-    left: 0;
     right: 0;
+    width: 100%;
 }
 
 .health-bar {
     background-color: yellow;
     height: 30px;
+    width: 100%;
 }
 
 .timer {
