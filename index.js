@@ -50,6 +50,10 @@ const player = new Fighter({
         run: {
             imageSrc: './assets/samuraiMack/run.png',
             framesMax: 8
+        },
+        jump: {
+            imageSrc: './assets/samuraiMack/jump.png',
+            framesMax: 2
         }
     }
 })
@@ -106,13 +110,19 @@ function animator() {
     enemy.velocity.x = 0
 
     // Player 1 movement
-    player.image = player.sprites.idle.image
     if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -5
-        player.image = player.sprites.run.image
+        player.changeSprite('run')
     } else if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5
-        player.image = player.sprites.run.image
+        player.changeSprite('run')
+    } else {
+        player.changeSprite('idle')
+    }
+
+    // Player 1 jump
+    if (player.velocity.y < 0) {
+        player.changeSprite('jump')
     }
 
     // Player 2 (enemy) movement
