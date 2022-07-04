@@ -17,7 +17,7 @@ class Sprite {
             this.image,
             this.framesCurrent * (this.image.width / this.framesMax),
             0,
-            this.image.width / this.framesMax - 1,
+            this.image.width / this.framesMax - 0.1,
             this.image.height,
             this.position.x,
             this.position.y,
@@ -40,9 +40,15 @@ class Sprite {
     }
 }
 
-class Fighter {
-    constructor({position, velocity, color = 'red', offset}) {
-        this.position = position
+class Fighter extends Sprite {
+    constructor({position, velocity, color = 'red', offset, imageSrc, scale = 1, framesMax = 1}) {
+        super({
+            position,
+            imageSrc,
+            scale,
+            framesMax,
+        })
+
         this.velocity = velocity
         this.height = 150
         this.width = 50
@@ -60,17 +66,9 @@ class Fighter {
         this.color = color
         this.isAttacking = false
         this.health = 100
-    }
-
-    draw() {
-        context.fillStyle = this.color
-        context.fillRect(this.position.x, this.position.y, this.width, this.height)
-
-        // Attack box
-        if (this.isAttacking) {
-            context.fillStyle = 'green'
-            context.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
-        }
+        this.framesCurrent = 0
+        this.framesElapsed = 0
+        this.framesHold = 5
     }
 
     update() {
@@ -96,7 +94,6 @@ class Fighter {
         } else if (enemy.position.x > 973 && enemy.lastKey === 'ArrowRight') {
             keys.ArrowRight.pressed = false
         }
-
     }
 
     attack() {
