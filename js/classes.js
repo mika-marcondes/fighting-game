@@ -84,7 +84,6 @@ class Fighter extends Sprite {
             width: 100,
             height: 50
         }
-        this.color = color
         this.isAttacking = false
         this.health = 100
         this.framesCurrent = 0
