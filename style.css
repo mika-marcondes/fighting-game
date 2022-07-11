@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    font-family: 'Press Start 2P', cursive;
 }
 
 body {
@@ -35,26 +36,34 @@ body {
 
 #enemyHealth {
     position: absolute;
-    background: blue;
+    background: #818cf8;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+    border: 4px solid white;
+    border-left: 0;
+    border-radius: 0 4px 4px 0;
 }
 
 #playerHealth {
     position: absolute;
-    background: blue;
+    background: #818cf8;
     top: 0;
     bottom: 0;
     right: 0;
     width: 100%;
+    border: 4px solid white;
+    border-right: 0;
+    border-radius: 4px 0 0 4px;
 }
 
 .health-bar {
-    background-color: yellow;
+    background-color: #de1e38;
     height: 30px;
     width: 100%;
+    border: 2px solid #60526c;
+    border-radius: 4px;
 }
 
 #timer {
@@ -62,9 +71,11 @@ body {
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    height: 100px;
+    height: 50px;
     width: 100px;
-    background-color: red;
+    background-color: #4d3257;
+    border: 4px solid #796393;
+    color: white;
 }
 
 #gameOver {
@@ -72,6 +83,7 @@ body {
     justify-content: center;
     position: absolute;
     color: white;
+    text-shadow: 2px 2px #4c3256;
     top: 0;
     right: 0;
     bottom: 0;
