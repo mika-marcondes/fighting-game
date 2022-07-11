@@ -63,6 +63,14 @@ const player = new Fighter({
             imageSrc: './assets/samuraiMack/attack1.png',
             framesMax: 6
         }
+    },
+    attackBox: {
+        offset: {
+            x: 100,
+            y: 50
+        },
+        width: 150,
+        height: 50
     }
 })
 
@@ -103,6 +111,14 @@ const enemy = new Fighter({
             imageSrc: './assets/enemyKenji/attack1.png',
             framesMax: 4
         }
+    },
+    attackBox: {
+        offset: {
+            x: -165,
+            y: 50
+        },
+        width: 150,
+        height: 50
     }
 })
 
@@ -176,10 +192,16 @@ function animator() {
     }
 
     // Detect collision for Player 1
-    if (detectCollision({rectangle1: player, rectangle2: enemy}) && player.isAttacking) {
+    if (detectCollision({rectangle1: player, rectangle2: enemy})
+        && player.isAttacking && player.framesCurrent === 4) {
         player.isAttacking = false
         enemy.health -= 10
         document.querySelector('#enemyHealth').style.width = enemy.health + '%'
+    }
+
+    // Attack miss (Player 1)
+    if (player.isAttacking && player.framesCurrent === 4) {
+        player.isAttacking = false
     }
 
     // Detect collision for Player 2 (Enemy)
@@ -187,6 +209,10 @@ function animator() {
         enemy.isAttacking = false
         player.health -= 10
         document.querySelector('#playerHealth').style.width = player.health + '%'
+    }
+
+    if (enemy.isAttacking && enemy.framesCurrent === 2) {
+        enemy.isAttacking = false
     }
 
     // End game based on health
