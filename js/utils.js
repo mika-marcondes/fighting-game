@@ -7,7 +7,7 @@ function detectCollision({rectangle1, rectangle2}) {
     )
 }
 
-let timer = 40
+let timer = 60
 let timerId
 
 function determineWinner({player, enemy, timerId}) {
