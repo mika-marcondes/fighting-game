@@ -214,7 +214,10 @@ function animator() {
         && player.isAttacking && player.framesCurrent === 4) {
         enemy.takeHit()
         player.isAttacking = false
-        document.querySelector('#enemyHealth').style.width = enemy.health + '%'
+
+        gsap.to('#enemyHealth', {
+            width: enemy.health + '%'
+        })
     }
 
     // Attack miss (Player 1)
@@ -226,7 +229,10 @@ function animator() {
     if (detectCollision({rectangle1: enemy, rectangle2: player}) && enemy.isAttacking) {
         player.takeHit()
         enemy.isAttacking = false
-        document.querySelector('#playerHealth').style.width = player.health + '%'
+
+        gsap.to('#playerHealth', {
+            width: player.health + '%'
+        })
     }
 
     if (enemy.isAttacking && enemy.framesCurrent === 2) {
